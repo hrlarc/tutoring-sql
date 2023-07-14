@@ -33,7 +33,7 @@ Next I imported the script into Postbird, a GUI for PostgreSQL.
 Using Excel, I created csv files with headings to match the tables in Postbird. For numeric data I used RANDBETWEEN and RANDINT to create realistic numbers. For name and email data, I used open-source sample data.
 
 Using the command prompt, I imported the data from the csvs into the database on Postbird.
-![alt text](https://github.com/hrlarc/tutoring-sql/blob/main/schema.png "Schema")
+![alt text](https://github.com/hrlarc/tutoring-sql/blob/main/cmd.png, "Cmd")
 
 #### Altering the tables after creation:
 * I decided to add an extra table for completed sessions, in order to evaluate the 2023 programme.
@@ -42,7 +42,7 @@ Using the command prompt, I imported the data from the csvs into the database on
 * 
 After making these changes in the csv files, I ensured new columns could have null values in Postbird, reimported them and deleted any duplicate rows.
 
-![alt text](https://github.com/hrlarc/tutoring-sql/blob/main/schema.png "Schema")
+![alt text](https://github.com/hrlarc/tutoring-sql/blob/main/postbird.png "postbird")
 
 ### Part 2
 1.	Which tutors scored their satisfaction with the programme as 10/10, and which schools were they at?
@@ -148,11 +148,8 @@ ma_improve|	name|	first_name|	email
 SELECT 
 
 r.en_results_2023-r.en_results_2022 AS en_improve,
-
 s.name,
-
 tu.first_name,
-
 tu.email
 
 
