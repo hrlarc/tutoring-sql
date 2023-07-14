@@ -10,21 +10,21 @@ Develop a database to store tutor information, school information, session infor
 Answer these questions:
 1.	Which tutors scored their satisfaction with the programme as 10/10, and which schools were they at?
 2.	Which tutors were least satisfied (bottom 20%) and have they re-enrolled to tutor next year?
-3.	Find the names and emails of tutors whose schools achieved more than a 0.8 point increase in their subject to send a congratulations email.
+3.	Find the names and emails of tutors whose schools achieved more than a 0.8 point increase in their average subject score to send a congratulations email.
 
 ### Part 3
 Create a PowerBI dashboard to show:
 * Evaluating 2023 Programme
-1.	a summary of schools and tutors that participated in 2023.
+1.	Summary of schools and tutors that participated in 2023
 2.	Improvement in English and Maths results
 3.	Tutor satisfaction and its impact on returning tutors
 * Planning for 2024 Programme
 1.	Number of sessions expected
 2.	Current and target numbers of tutors
-3.	How many tutors need to be hired for each subject and each day.
+3.	How many tutors need to be hired for each subject and each day
 
 ## Solution
-### Part 1
+### Part 1 - Creating Database with PostgreSQL
 I created a database schema using dbdiagram.io to show relationships between the primary key columns of different tables.
 ![alt text](https://github.com/hrlarc/tutoring-sql/blob/main/schema.png "Schema")
 
@@ -32,19 +32,20 @@ Next I imported the script into Postbird, a GUI for PostgreSQL.
 
 Using Excel, I created csv files with headings to match the tables in Postbird. For numeric data I used RANDBETWEEN and RANDINT to create realistic numbers. For name and email data, I used open-source sample data.
 
-Using the command prompt, I imported the data from the csvs into the database on Postbird.
-![alt text](https://github.com/hrlarc/tutoring-sql/blob/main/cmd.png, "Cmd")
+Using the command prompt, I imported the data from the CSVs into the database on Postbird.
+
+![alt text](https://github.com/hrlarc/tutoring-sql/blob/main/cmd.png "Cmd")
 
 #### Altering the tables after creation:
 * I decided to add an extra table for completed sessions, in order to evaluate the 2023 programme.
 * I also added an extra column to Tutors for a satisfaction score.
 * I split results into separate English and Maths scores.
-* 
+  
 After making these changes in the csv files, I ensured new columns could have null values in Postbird, reimported them and deleted any duplicate rows.
 
 ![alt text](https://github.com/hrlarc/tutoring-sql/blob/main/postbird.png "postbird")
 
-### Part 2
+### Part 2 - Custom SQL Queries
 1.	Which tutors scored their satisfaction with the programme as 10/10, and which schools were they at?
 ```SQL
 SELECT tu.satisfaction AS most_satisfied, tu.first_name, s.name
@@ -135,7 +136,7 @@ ON tu.id = e.tutor_id
 
 WHERE tu.subject = 'Maths' AND r.ma_results_2023-r.ma_results_2022 >= 0.8;
 ```
-Output
+Output:
 ma_improve|	name|	first_name|	email
 ---|---|---|---
 1.1|	Eastbank|	Anthony|	AnthonyLopez@gmail.com
@@ -148,10 +149,12 @@ ma_improve|	name|	first_name|	email
 SELECT 
 
 r.en_results_2023-r.en_results_2022 AS en_improve,
-s.name,
-tu.first_name,
-tu.email
 
+s.name,
+
+tu.first_name,
+
+tu.email
 
 
 FROM results AS r
@@ -170,7 +173,7 @@ ON tu.id = e.tutor_id
 
 WHERE tu.subject = 'English' AND r.en_results_2023-r.en_results_2022 >= 0.8;
 ```
-Output
+Output:
 en_improve|	name|	first_name|	email
 ---|---|---|---
 0.9|	All Saints|	Laura|	LauraJackson@hotmail.com
@@ -179,11 +182,16 @@ en_improve|	name|	first_name|	email
 0.8|	Woodlands|	Richard|	RichardParker@yahoo.com
 1.8|	St Mary|	Margaret|	MargaretEdwards@facebook.com
 
-###Part 3 - Power BI Dashboard
+### Part 3 - Power BI Dashboard
 Below are screen shots of the dynamic Power BI dashboard.
 
-The whole page filters available are for English, Maths or both subjects.
+The whole page can be filtered for English, Maths or both subjects.
 
-A visual-specific filter is for the barchart showing tutor satisfaction which can be filtered by those returning or not for the next programme to explore whether people are not returning because they are not satisfied or if they did enjoy the programme and have another reason not to continue.
+There is a visual-specific filter on the barchart showing tutor satisfaction which can filtered those returning or not for the next programme. This helps to explore whether people are not returning because they are not satisfied or if they did enjoy the programme and have another reason not to continue.
 
 ![alt text](https://github.com/hrlarc/tutoring-sql/blob/main/tut-viz-2.png "tut2")
+Whole page filter Maths:
+![alt text](https://github.com/hrlarc/tutoring-sql/blob/main/tut-viz-3.png "tut3")
+Single visual filter Not Returning:
+![alt text](https://github.com/hrlarc/tutoring-sql/blob/main/tut-viz-4.png "tut4")
+This shows that the majority of non-returners were unhappy with the programme.
