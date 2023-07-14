@@ -179,3 +179,11 @@ en_improve|	name|	first_name|	email
 0.8|	Woodlands|	Richard|	RichardParker@yahoo.com
 1.8|	St Mary|	Margaret|	MargaretEdwards@facebook.com
 
+###Part 3 - Power BI Dashboard
+Below are screen shots of the dynamic Power BI dashboard.
+
+The whole page filters available are for English, Maths or both subjects.
+
+A visual-specific filter is for the barchart showing tutor satisfaction which can be filtered by those returning or not for the next programme to explore whether people are not returning because they are not satisfied or if they did enjoy the programme and have another reason not to continue.
+
+![alt text](https://github.com/hrlarc/tutoring-sql/blob/main/tut-viz-2.png "tut2")
